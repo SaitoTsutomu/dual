@@ -3,10 +3,6 @@ import sys
 from collections import defaultdict
 from itertools import chain, count
 
-# see pyproject.toml
-__version__ = "0.0.9"
-__author__ = "Saito Tsutomu <tsutomu7@hotmail.co.jp>"
-
 
 def addplus(s):
     return s if s.startswith(("+", "-")) else "+" + s
@@ -46,7 +42,7 @@ def split_term(s, ismat=False):
     for t in ss:
         tt = t.split()
         if not (0 < len(tt) < 3):
-            raise Exception("Format error [%s]" % s)
+            raise ValueError("Format error [%s]" % s)
         c, v = (["I" if ismat else "e^T"] + tt)[-2:]
         if v[0] == "-":
             c, v = minus(c), minus(v)
@@ -57,21 +53,20 @@ def split_term(s, ismat=False):
 
 
 def dual(mdl):
-    ss = [
-        s.split("#")[0].strip()
-        for s in mdl.strip().split("\n")
-        if s and not s.startswith("#")
-    ]
+    ss = []
+    for s in mdl.strip().split("\n"):
+        if s and not s.startswith("#"):
+            ss.append(s.split("#")[0].strip())
     if not ss:
-        raise Exception("Set mathematical optimization model")
+        raise ValueError("Set mathematical optimization model")
     if ss[0][:3] not in ("min", "max"):
-        raise Exception('Must start "min" or "max" [%s]' % ss[0])
+        raise ValueError('Must start "min" or "max" [%s]' % ss[0])
     is_min = ss[0][:3] == "min"
     ds = split_term(ss[0][3:])
     dc = defaultdict(lambda: "0^T")
     for v, uu in ds.items():
         if len(uu) != 1:
-            raise Exception("Format error [%s]" % ss[0])
+            raise ValueError("Format error [%s]" % ss[0])
         dc[v] = uu[0]
     di = defaultdict(lambda: "=")
     cc = []
@@ -85,7 +80,7 @@ def dual(mdl):
     for s, dv in zip(cc, dualvar(ss)):
         m = re.fullmatch(r"([^<>=]+)(>|<|)=\s*(\S+)", s)
         if not m:
-            raise Exception("Format error [%s]" % s)
+            raise ValueError("Format error [%s]" % s)
         t, f, b = m.groups()
         if not b.startswith(("+", "-")):
             b = "+" + b
@@ -105,6 +100,7 @@ def dual(mdl):
     return "\n".join(dr + dd)
 
 
+# dualマジックコマンド登録
 try:
     import IPython.core.getipython
 
@@ -113,7 +109,7 @@ try:
 
     ip = IPython.core.getipython.get_ipython()
     ip.register_magic_function(dual_impl, magic_kind="cell", magic_name="dual")
-except:
+except (ModuleNotFoundError, AttributeError):
     pass
 
 
