@@ -12,20 +12,17 @@ homepage = "https://github.com/SaitoTsutomu/dual"
 license = "Apache-2.0"
 name = "dual"
 readme = "README.md"
-version = "0.1.0"
+version = "0.2.0"
 
 [tool.poetry.scripts]
 dual = "dual:main"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.12"
 
 [tool.poetry.dev-dependencies]
-black = "^22.12"
-flake8 = "^6.0"
-isort = "^5.11"
-mypy = "^0.991"
-pytest = "^7.2"
+mypy = "^1.11"
+pytest = "^8.3"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
