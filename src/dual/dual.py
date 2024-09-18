@@ -112,5 +112,5 @@ try:
     @register_cell_magic("dual")
     def _dual(_, s):
         print(dual(s))
-except (ModuleNotFoundError, NameError, AttributeError):
+except (ImportError, NameError, AttributeError):
     pass
