@@ -12,8 +12,8 @@ description = "`dual` is a package for dual problem."
 license = {text = "Apache-2.0"}
 name = "dual"
 readme = "README.md"
-requires-python = ">=3.12"
-version = "0.3.1"
+requires-python = ">=3.11"
+version = "0.3.2"
 
 [project.urls]
 homepage = "https://github.com/SaitoTsutomu/dual"
@@ -24,7 +24,7 @@ dual = "dual:main"
 [tool.uv]
 dev-dependencies = [
   "jupyterlab>=4.2.5",
-  "pytest>=8.3.2",
+  "pytest>=8.3.3",
 ]
 
 [tool.mypy]
