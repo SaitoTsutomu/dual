@@ -13,7 +13,7 @@ def addplus(s):
 
 
 def delplus(s):
-    return s[1:] if s.startswith("+") else s
+    return s.removeprefix("+")
 
 
 def minus(s):
