@@ -1,3 +1,4 @@
+# flake8: noqa: S101
 from textwrap import dedent
 
 from dual import dual
