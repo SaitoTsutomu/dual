@@ -35,7 +35,7 @@ ignore_missing_imports = true
 src = ["src"]
 
 [tool.ruff.lint]
-ignore = ["ANN001", "ANN20", "CPY", "D1", "D2", "D4", "E501", "T201"]
+ignore = ["ANN001", "ANN20", "CPY", "D1", "D2", "D4", "E501", "RUF039", "T201"]
 preview = true
 select = [
   "F", # Pyflakes https://docs.astral.sh/ruff/rules/#pyflakes-f
